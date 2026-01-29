@@ -140,7 +140,7 @@ int main(void)
   /* Output structure for orientation */
   imu_measurement_t imu_data;
   orientation_t orientation;
-
+  huart2_printf("---------------Start---------------");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -158,23 +158,28 @@ int main(void)
       /* Read compass heading */
       status = heading(&deg);
       
-      /* Format output with 2 decimal places */
-      int roll_int = (int)orientation.roll;
-      int roll_frac = (int)(fabsf(orientation.roll - roll_int) * 100);
+      /* Communikation with the other board */
+      uint8_t frame[14] = {0};
+      frame[0] = 0xAA;
+      frame[1] = 0x33;
 
-      int pitch_int = (int)orientation.pitch;
-      int pitch_frac = (int)(fabsf(orientation.pitch - pitch_int) * 100);
+      memcpy(&frame[2],  &orientation.roll,  4);
+      memcpy(&frame[6],  &orientation.pitch, 4);
+      memcpy(&frame[10], &orientation.yaw,   4);
 
-      int yaw_int = (int)orientation.yaw;
-      int yaw_frac = (int)(fabsf(orientation.yaw - yaw_int) * 100);
+      HAL_UART_Transmit(&huart2, frame, sizeof(frame), HAL_MAX_DELAY);
 
-      /* Print telemetry */
-      if (status == HAL_OK) {
-          huart2_printf("HEADING= %d\r\n", deg);
-      }
-      huart2_printf("ROLL=%d.%02d PITCH=%d.%02d YAW=%d.%02d\r\n",
-                    roll_int, roll_frac, pitch_int, pitch_frac, yaw_int, yaw_frac);
-      
+      HAL_Delay(20);
+
+      uint8_t frame2[14] = {0};
+      frame2[0] = 0xAA;
+      frame2[1] = 0x44;
+
+      float heading_f = (float)deg;
+
+      memcpy(&frame2[2],  &heading_f,  4);
+
+      HAL_UART_Transmit(&huart2, frame2, sizeof(frame2), HAL_MAX_DELAY);
       HAL_Delay(20);
   }
 
