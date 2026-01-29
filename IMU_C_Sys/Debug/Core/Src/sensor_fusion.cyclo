@@ -1,0 +1,4 @@
+../Core/Src/sensor_fusion.c:31:6:SensorFusion_Init	1
+../Core/Src/sensor_fusion.c:39:14:get_dt	3
+../Core/Src/sensor_fusion.c:53:13:apply_moving_average	2
+../Core/Src/sensor_fusion.c:70:6:SensorFusion_Update	3

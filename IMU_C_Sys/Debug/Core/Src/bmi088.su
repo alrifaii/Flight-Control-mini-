@@ -1,0 +1,4 @@
+../Core/Src/bmi088.c:38:12:bmi088_spi_write	24	static
+../Core/Src/bmi088.c:63:12:bmi088_spi_read	40	static
+../Core/Src/bmi088.c:93:5:BMI088_Init	40	static
+../Core/Src/bmi088.c:179:5:BMI088_Read	56	static

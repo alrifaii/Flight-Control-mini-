@@ -1,0 +1,4 @@
+../Core/Src/compass.c:14:19:compass4clickInit	4
+../Core/Src/compass.c:48:19:heading	16
+../Core/Src/compass.c:190:26:readSingleI2cCommand	1
+../Core/Src/compass.c:211:26:writeSingleI2cCommand	1
